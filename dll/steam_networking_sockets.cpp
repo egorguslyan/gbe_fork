@@ -153,6 +153,7 @@ shared_between_client_server* Steam_Networking_Sockets::get_shared_between_clien
 
 HSteamListenSocket Steam_Networking_Sockets::new_listen_socket(int nSteamConnectVirtualPort, int real_port)
 {
+    PRINT_DEBUG("virtual port: %i real port: %i", nSteamConnectVirtualPort, real_port);
     HSteamListenSocket socket_id = get_socket_id();
     if (socket_id == k_HSteamListenSocket_Invalid) ++socket_id;
     CSteamID steam_id = settings->get_local_steam_id();
@@ -314,6 +315,8 @@ HSteamListenSocket Steam_Networking_Sockets::CreateListenSocketIP( const SteamNe
 
 HSteamListenSocket Steam_Networking_Sockets::CreateListenSocketIP( const SteamNetworkingIPAddr &localAddress, int nOptions, const SteamNetworkingConfigValue_t *pOptions )
 {
+    const uint32 ip = localAddress.GetIPv4();
+    PRINT_DEBUG("Steam networking: listen on %hhu.%hhu.%hhu.%hhu:%hu", ((unsigned char *)&ip)[0], ((unsigned char *)&ip)[1], ((unsigned char *)&ip)[2], ((unsigned char *)&ip)[3], htons(localAddress.m_port));
     PRINT_DEBUG_ENTRY();
     std::lock_guard<std::recursive_mutex> lock(global_mutex);
     return new_listen_socket(SNS_DISABLED_PORT, localAddress.m_port);
