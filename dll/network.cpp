@@ -902,6 +902,7 @@ Common_Message Networking::create_announce(bool request)
         for (auto &conn: connections) {
             PRINT_DEBUG("Connection %u %llu %u", conn.udp_pinged, conn.ids[0].ConvertToUint64(), conn.appid);
             if (conn.udp_pinged) {
+                PRINT_DEBUG("UDP connection %hhu.%hhu.%hhu.%hhu:%hu", ((unsigned char *)&conn.udp_ip_port.ip)[0], ((unsigned char *)&conn.udp_ip_port.ip)[1], ((unsigned char *)&conn.udp_ip_port.ip)[2], ((unsigned char *)&conn.udp_ip_port.ip)[3], htons(conn.udp_ip_port.port));
                 Announce_Other_Peers *peer = announce->add_peers();
                 peer->set_id(conn.ids[0].ConvertToUint64());
                 peer->set_ip(conn.udp_ip_port.ip);
