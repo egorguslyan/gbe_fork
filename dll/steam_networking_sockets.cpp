@@ -316,7 +316,7 @@ HSteamListenSocket Steam_Networking_Sockets::CreateListenSocketIP( const SteamNe
 HSteamListenSocket Steam_Networking_Sockets::CreateListenSocketIP( const SteamNetworkingIPAddr &localAddress, int nOptions, const SteamNetworkingConfigValue_t *pOptions )
 {
     const uint32 ip = localAddress.GetIPv4();
-    PRINT_DEBUG("Steam networking: listen on %hhu.%hhu.%hhu.%hhu:%hu", ((unsigned char *)&ip)[0], ((unsigned char *)&ip)[1], ((unsigned char *)&ip)[2], ((unsigned char *)&ip)[3], htons(localAddress.m_port));
+    PRINT_DEBUG("Steam networking: listen on %hhu.%hhu.%hhu.%hhu:%hu", ((unsigned char *)&ip)[0], ((unsigned char *)&ip)[1], ((unsigned char *)&ip)[2], ((unsigned char *)&ip)[3], localAddress.m_port);
     PRINT_DEBUG_ENTRY();
     std::lock_guard<std::recursive_mutex> lock(global_mutex);
     return new_listen_socket(SNS_DISABLED_PORT, localAddress.m_port);
